@@ -2,6 +2,10 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/application/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/application/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/application/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/application/tests" isTestSource="true" packagePrefix="Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/reflection-docblock" />
@@ -60,8 +64,6 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/polyfill-intl-idn" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/polyfill-ctype" />
-      <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/polyfill-php81" />
-      <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpunit/php-file-iterator" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/polyfill-iconv" />
@@ -116,6 +118,12 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/laminas/laminas-diactoros" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/psr-http-message-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/application/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/application/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/carbonphp/carbon-doctrine-types" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/psr/clock" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

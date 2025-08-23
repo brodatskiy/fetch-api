@@ -9,6 +9,18 @@ services:
             - "6969:8000"
         networks:
             - cluster
+        container_name: app
+
+    db:
+        image: mysql
+        ports:
+            - '${DB_PORT:-3306}:3306'
+        restart: always
+        environment:
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+        container_name: db
+
 networks:
     cluster:
         name: cluster

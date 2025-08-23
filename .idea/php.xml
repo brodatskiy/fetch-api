@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="d4039ce5-76d6-4465-963d-f340510e3577" timeout="30000" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/application/vendor/phpdocumentor/reflection-common" />
@@ -60,8 +75,6 @@
       <path value="$PROJECT_DIR$/application/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/application/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/application/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/application/vendor/symfony/polyfill-php81" />
-      <path value="$PROJECT_DIR$/application/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/application/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/application/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/application/vendor/symfony/polyfill-iconv" />
@@ -116,12 +129,34 @@
       <path value="$PROJECT_DIR$/application/vendor/composer" />
       <path value="$PROJECT_DIR$/application/vendor/laminas/laminas-diactoros" />
       <path value="$PROJECT_DIR$/application/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/application/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/application/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/application/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/application/vendor/doctrine/deprecations" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.3">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="d4039ce5-76d6-4465-963d-f340510e3577" timeout="60000" />
+    </PhpStan_settings>
+  </component>
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/application/vendor/autoload.php" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="d4039ce5-76d6-4465-963d-f340510e3577" timeout="60000" />
+    </Psalm_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
   </component>
 </project>
