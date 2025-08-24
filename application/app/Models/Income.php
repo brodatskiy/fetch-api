@@ -9,9 +9,12 @@ class Income extends Model
 {
     use HasFactory;
 
+    protected $table = 'incomes';
+    protected $guarded = [];
     protected $hidden = [
         'updated_at',
         'created_at',
         'id'
     ];
+
 }

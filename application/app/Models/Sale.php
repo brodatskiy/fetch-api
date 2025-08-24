@@ -9,6 +9,8 @@ class Sale extends Model
 {
     use HasFactory;
 
+    protected $table = 'sales';
+    protected $guarded = [];
     protected $hidden = [
         'updated_at',
         'created_at',
