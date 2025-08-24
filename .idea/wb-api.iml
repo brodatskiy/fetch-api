@@ -124,6 +124,7 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpstan/phpdoc-parser" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/_laravel_idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
