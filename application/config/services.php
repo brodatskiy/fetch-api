@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'fetch_api' => [
+        'host' => env('FETCH_API_HOST', 'https://api.example.com'),
+        'timeout' => env('FETCH_API_TIMEOUT', 2.0),
+        'key' => env('FETCH_API_KEY'),
+    ],
 ];
