@@ -16,7 +16,7 @@ class CreateIncomesTable extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('income_id')->nullable();
-            $table->unsignedInteger('number')->nullable();
+            $table->string('number')->nullable();
             $table->date('date')->nullable();
             $table->date('last_change_date')->nullable();
             $table->char('supplier_article', 16)->nullable();
