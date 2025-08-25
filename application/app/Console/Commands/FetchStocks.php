@@ -46,13 +46,8 @@ class FetchStocks extends Command
         $dateFrom = $this->argument('dateFrom') ? $this->argument('dateFrom') : Carbon::today()->format('Y-m-d');
         $dateTo = $this->argument('dateTo') ? $this->argument('dateTo') : Carbon::today()->format('Y-m-d');
 
-        $stocks = $fetchService->fetch('/api/stocks', $dateFrom, $dateTo);
+        $fetchService->fetch(Stock::class,'/api/stocks', $dateFrom, $dateTo);
 
-        foreach ($stocks as $stock) {
-            Stock::create($stock);
-        }
-
-        $this->info('Данные загружены');
         return 0;
     }
 }

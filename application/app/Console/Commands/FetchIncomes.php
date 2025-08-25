@@ -45,13 +45,8 @@ class FetchIncomes extends Command
         $dateFrom = $this->argument('dateFrom') ? $this->argument('dateFrom') : '1970-01-01';
         $dateTo = $this->argument('dateTo') ? $this->argument('dateTo') : Carbon::today()->format('Y-m-d');
 
-        $incomes = $fetchService->fetch('/api/incomes', $dateFrom, $dateTo);
+        $fetchService->fetch(Income::class,'/api/incomes', $dateFrom, $dateTo);
 
-        foreach ($incomes as $income) {
-            Income::create($income);
-        }
-
-        $this->info('Данные загружены');
         return 0;
     }
 }
