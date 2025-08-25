@@ -15,7 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->decimal('g_number', 30, 0)->nullable();
+            $table->decimal('g_number', 20, 0)->nullable();
             $table->date('date')->nullable();
             $table->date('last_change_date')->nullable();
             $table->char('supplier_article', 16)->nullable();
