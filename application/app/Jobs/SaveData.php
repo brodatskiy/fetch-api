@@ -37,7 +37,7 @@ class SaveData implements ShouldQueue
         $model = app($this->model);
 
         foreach ($this->data as $item) {
-            $model::create($item);
+            $model::updateOrInsert($item);
         }
     }
 }
