@@ -16,7 +16,7 @@ class CreateApiServicesTable extends Migration
         Schema::create('api_services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('url');
+            $table->string('host');
             $table->json('endpoints')->nullable();
             $table->json('supported_token_types');
             $table->timestamps();
