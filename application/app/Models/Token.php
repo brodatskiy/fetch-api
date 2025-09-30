@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static create(array $array)
+ */
 class Token extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'token_type_id',
+        'token_value',
+        'account_id',
+        'api_service_id',
     ];
 
     public function apiService(): BelongsTo
