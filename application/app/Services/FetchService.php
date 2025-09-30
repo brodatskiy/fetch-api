@@ -12,6 +12,9 @@ class FetchService
 {
     private int $page = 1;
     const LIMIT = 500;
+    private int $backoffDelay = 60;
+    private int $backoffAttempt = 0;
+    private int $backoffMaxAttempt = 5;
     private Client $client;
 
     public function __construct()
@@ -38,21 +41,26 @@ class FetchService
                 ],
             ]);
 
+            $hasMorePages = $data['meta']['last_page'] > $this->page ?? false;
             [$remainingRequests] = $response->getHeader('X-RateLimit-Remaining');
 
             if ($remainingRequests == 0) {
-                sleep(60);
+                $this->waitForBackoff();
+                continue;
             }
 
             $data = json_decode($response->getBody()->getContents(), true);
-
             SaveData::dispatch($modelName, $data);
-
-            $hasMorePages = $data['meta']['last_page'] > $this->page ?? false;
             $this->page++;
+            $this->backoffAttempt = 0;
         } while ($hasMorePages);
 
     }
 
-
+    private function waitForBackoff(): void
+    {
+        $delay = $this->backoffDelay * pow(2, $this->backoffAttempt);
+        $this->backoffAttempt++;
+        sleep($delay);
+    }
 }
