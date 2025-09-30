@@ -54,7 +54,6 @@ class FetchService
             $this->page++;
             $this->backoffAttempt = 0;
         } while ($hasMorePages);
-
     }
 
     private function waitForBackoff(): void
