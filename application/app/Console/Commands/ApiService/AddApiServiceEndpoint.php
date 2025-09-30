@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\ApiService;
 
 use App\Models\ApiService;
 use Illuminate\Console\Command;
