@@ -12,19 +12,23 @@ class FetchService
 {
     private int $page = 1;
     const LIMIT = 500;
+    private Client $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => Config::get('services.fetch_api.host'),
+            'timeout' => Config::get('services.fetch_api.timeout', 2.0),
+        ]);
+    }
 
     /**
      * @throws GuzzleException
      */
     public function fetch(string $modelName, string $uri, string $dateFrom, string $dateTo): void
     {
-        $client = new Client([
-            'base_uri' => Config::get('services.fetch_api.host'),
-            'timeout' => Config::get('services.fetch_api.timeout', 2.0),
-        ]);
-
         do {
-            $response = $client->request('GET', $uri, [
+            $response = $this->client->request('GET', $uri, [
                 'query' => [
                     'dateFrom' => $dateFrom,
                     'dateTo' => $dateTo,
@@ -34,9 +38,9 @@ class FetchService
                 ],
             ]);
 
-            $remainingRequests = $response->getHeader('X-RateLimit-Remaining');
+            [$remainingRequests] = $response->getHeader('X-RateLimit-Remaining');
 
-            if ($remainingRequests[0] == 0) {
+            if ($remainingRequests == 0) {
                 sleep(60);
             }
 
@@ -49,4 +53,6 @@ class FetchService
         } while ($hasMorePages);
 
     }
+
+
 }
