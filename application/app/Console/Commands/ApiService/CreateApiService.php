@@ -3,6 +3,7 @@
 namespace App\Console\Commands\ApiService;
 
 use App\Models\ApiService;
+use App\Models\TokenType;
 use Illuminate\Console\Command;
 
 class CreateApiService extends Command
@@ -14,10 +15,9 @@ class CreateApiService extends Command
      * @var string
      */
     protected $signature = 'api-service:create 
-                            {name}
-                            {host}
-                            {--T|token_types=*}
-                            {--E|endpoints=*}';
+                            {name?}
+                            {host?}
+                            {--T|token_type_ids=*}';
     /**
      * The console command description.
      *
@@ -42,12 +42,22 @@ class CreateApiService extends Command
      */
     public function handle(): int
     {
-        ApiService::create([
-            'name' => $this->argument('name'),
-            'host' => $this->argument('host'),
-            'endpoints' => $this->option('endpoints'),
-            'supported_token_types' => $this->option('token_types'),
+        $name = $this->argument('name') ?? $this->ask('Имя сервиса');
+        $host = $this->argument('host') ?? $this->ask('хост');
+        $token_types_ids = $this->option('token_type_ids');
+
+        if (!$token_types_ids) {
+            $token_types = TokenType::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $token_types_choice = $this->choice('Выберете тип токена', $token_types, null, null,  true);
+            $token_types_ids = array_keys(array_intersect($token_types, $token_types_choice));
+        }
+
+        $apiService = ApiService::create([
+            'name' => $name,
+            'host' => $host,
         ]);
+
+        $apiService->tokenTypes()->attach($token_types_ids);
 
         $this->info("Api сервис " . $this->argument('name') . " создан");
 
