@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static create(array $array)
+ * @method static find(array|string|null $argument)
  */
 class ApiService extends Model
 {
@@ -17,11 +18,9 @@ class ApiService extends Model
         'name',
         'host',
         'supported_token_types',
-        'endpoints',
     ];
 
     protected $casts = [
-        'endpoints' => 'array',
         'supported_token_types' => 'array',
     ];
 
@@ -33,19 +32,5 @@ class ApiService extends Model
     public function endpoints(): HasMany
     {
         return $this->hasMany(Endpoint::class);
-    }
-
-    public function addEndpoints(array $newEndpoints): bool
-    {
-        $endpoints = $this->endpoints ?? [];
-
-        foreach ($newEndpoints as $endpoint) {
-            if (!in_array($endpoint, $endpoints)) {
-                $endpoints[] = $endpoint;
-            }
-        }
-
-        $this->endpoints = $endpoints;
-        return $this->save();
     }
 }
