@@ -12,7 +12,11 @@ class Endpoint extends Model
 
     protected $fillable = [
         'name',
+        'urn',
+        'model',
+        'api_service_id',
     ];
+
     public function apiService(): BelongsTo
     {
         return $this->belongsTo(ApiService::class);
