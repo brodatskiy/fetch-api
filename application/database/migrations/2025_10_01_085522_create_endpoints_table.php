@@ -19,7 +19,7 @@ class CreateEndpointsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('urn');
-            $table->enum('model', Model::values());
+            $table->string('model');
             $table->foreignIdFor(ApiService::class)->index()
                 ->constrained()
                 ->cascadeOnUpdate()
