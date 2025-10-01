@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\ApiService;
+use App\Models\Company;
+use App\Models\TokenType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $company = Company::create([
+            'name' => 'test Company',
+        ]);
+        $company->accounts()->create([
+            'name' => 'test Account',
+        ]);
+
+        $tokenTypes = ['api-key', 'bearer', 'basic'];
+
+        foreach ($tokenTypes as $tokenType) {
+            TokenType::create(['name' => $tokenType]);
+        }
+
+        $apiService = ApiService::create([
+            'name' => 'test Api',
+            'host' => 'test.test.test',
+        ]);
+
+        $apiService->tokenTypes()->attach([1, 2, 3]);
     }
 }
