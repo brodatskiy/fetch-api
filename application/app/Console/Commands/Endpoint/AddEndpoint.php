@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Console\Commands\ApiService;
+namespace App\Console\Commands\Endpoint;
 
 use App\Models\ApiService;
+use App\Models\Endpoint;
 use Illuminate\Console\Command;
 
-class AddApiServiceEndpoint extends Command
+class AddEndpoint extends Command
 {
 
     /**
@@ -13,9 +14,11 @@ class AddApiServiceEndpoint extends Command
      *
      * @var string
      */
-    protected $signature = 'api-service:add 
-                            {id}
-                            {--E|endpoints=*}';
+    protected $signature = 'endpoint:add 
+                            {name}
+                            {urn}
+                            {model}
+                            {api_service_id}';
     /**
      * The console command description.
      *
@@ -41,7 +44,12 @@ class AddApiServiceEndpoint extends Command
     public function handle(): int
     {
         $apiService = ApiService::find($this->argument('id'));
-        $apiService->addEndpoints( $this->option('endpoints'));
+
+        $apiService->endpoints()->create([
+            'name' => $this->argument('name'),
+            'urn' => $this->argument('urn'),
+            'model' => $this->argument('model'),
+        ]);
 
         return 0;
     }
