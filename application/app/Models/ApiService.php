@@ -30,6 +30,11 @@ class ApiService extends Model
         return $this->hasMany(Token::class);
     }
 
+    public function endpoints(): HasMany
+    {
+        return $this->hasMany(Endpoint::class);
+    }
+
     public function addEndpoints(array $newEndpoints): bool
     {
         $endpoints = $this->endpoints ?? [];
