@@ -12,7 +12,7 @@ class CreateTokenType extends Command
      *
      * @var string
      */
-    protected $signature = 'token-type:create {name}';
+    protected $signature = 'token-type:create {name?}';
     /**
      * The console command description.
      *
@@ -37,8 +37,10 @@ class CreateTokenType extends Command
      */
     public function handle(): int
     {
+        $name = $this->argument('name') ?? $this->ask('Имя токена');
+
         TokenType::create([
-            'name' => $this->argument('name'),
+            'name' => $name,
         ]);
 
         $this->info("Token type " . $this->argument('name') . " created");
