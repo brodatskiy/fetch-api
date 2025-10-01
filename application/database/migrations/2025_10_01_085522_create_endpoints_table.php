@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\Model;
 use App\Models\ApiService;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +19,7 @@ class CreateEndpointsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('urn');
-            $table->string('model');
+            $table->enum('model', Model::values());
             $table->foreignIdFor(ApiService::class)->index()
                 ->constrained()
                 ->cascadeOnUpdate()
