@@ -17,7 +17,7 @@ class CreateEndpointsTable extends Migration
         Schema::create('endpoints', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('uri');
+            $table->string('urn');
             $table->string('model');
             $table->foreignIdFor(ApiService::class)->index()
                 ->constrained()
