@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Token;
 
 use App\Models\Token;
 use Illuminate\Console\Command;

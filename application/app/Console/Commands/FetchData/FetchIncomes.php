@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\FetchData;
 
-use App\Models\Order;
+use App\Models\Income;
 use App\Services\FetchService;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
-class FetchOrders extends Command
+class FetchIncomes extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'fetch:orders {dateFrom?} {dateTo?}';
-
+    protected $signature = 'fetch:incomes {account_id} {dateFrom?} {dateTo?}';
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetch Orders';
+    protected $description = 'Fetch Incomes';
 
     /**
      * Create a new command instance.
@@ -46,7 +45,7 @@ class FetchOrders extends Command
         $dateFrom = $this->argument('dateFrom') ? $this->argument('dateFrom') : '1970-01-01';
         $dateTo = $this->argument('dateTo') ? $this->argument('dateTo') : Carbon::today()->format('Y-m-d');
 
-        $fetchService->fetch( Order::class,'/api/orders', $dateFrom, $dateTo);
+        $fetchService->fetch(Income::class,'/api/incomes', $dateFrom, $dateTo);
 
         return 0;
     }

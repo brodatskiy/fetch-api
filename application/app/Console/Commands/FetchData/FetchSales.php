@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\FetchData;
 
 use App\Models\Sale;
 use App\Services\FetchService;
@@ -15,7 +15,7 @@ class FetchSales extends Command
      *
      * @var string
      */
-    protected $signature = 'fetch:sales {dateFrom?} {dateTo?}';
+    protected $signature = 'fetch:sales {account_id} {dateFrom?} {dateTo?}';
 
     /**
      * The console command description.

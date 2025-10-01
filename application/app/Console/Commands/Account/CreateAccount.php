@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Account;
 
-use App\Models\Account;
 use App\Models\Company;
 use Illuminate\Console\Command;
 

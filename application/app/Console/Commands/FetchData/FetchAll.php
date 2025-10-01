@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\FetchData;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class FetchAll extends Command
      *
      * @var string
      */
-    protected $signature = 'fetch:all';
+    protected $signature = 'fetch:all {account_id}';
 
     /**
      * The console command description.
@@ -37,10 +37,19 @@ class FetchAll extends Command
      */
     public function handle(): int
     {
-        $this->call('fetch:incomes');
-        $this->call('fetch:orders');
-        $this->call('fetch:sales');
-        $this->call('fetch:stocks');
+
+        $this->call('fetch:incomes', [
+            'account_id' => $this->argument('account_id'),
+        ]);
+        $this->call('fetch:orders', [
+            'account_id' => $this->argument('account_id'),
+        ]);
+        $this->call('fetch:sales', [
+            'account_id' => $this->argument('account_id'),
+        ]);
+        $this->call('fetch:stocks', [
+            'account_id' => $this->argument('account_id'),
+        ]);
 
         return 0;
     }

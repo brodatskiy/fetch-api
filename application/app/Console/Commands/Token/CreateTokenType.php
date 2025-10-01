@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Token;
 
-use App\Models\Company;
+use App\Models\TokenType;
 use Illuminate\Console\Command;
 
-class CreateCompany extends Command
+class CreateTokenType extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'company:create {name : The name of the company}';
+    protected $signature = 'token-type:create {name}';
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create new company';
+    protected $description = 'Create Token Type';
 
     /**
      * Create a new command instance.
@@ -37,11 +37,11 @@ class CreateCompany extends Command
      */
     public function handle(): int
     {
-        Company::create([
+        TokenType::create([
             'name' => $this->argument('name'),
         ]);
 
-        $this->info("Компания " . $this->argument('name') . " создана");
+        $this->info("Token type " . $this->argument('name') . " created");
 
         return 0;
     }
