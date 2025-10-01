@@ -4,7 +4,6 @@ namespace App\Console\Commands\Company;
 
 use App\Models\Company;
 use Illuminate\Console\Command;
-
 class CreateCompany extends Command
 {
     /**
@@ -12,7 +11,7 @@ class CreateCompany extends Command
      *
      * @var string
      */
-    protected $signature = 'company:create {name}';
+    protected $signature = 'company:create {name?}';
     /**
      * The console command description.
      *
@@ -37,11 +36,13 @@ class CreateCompany extends Command
      */
     public function handle(): int
     {
+        $name = $this->argument('name') ?? $this->ask('Имя компании');
+
         Company::create([
-            'name' => $this->argument('name'),
+            'name' => $name,
         ]);
 
-        $this->info("Компания " . $this->argument('name') . " создана");
+        $this->info("Компания " . $name . " создана");
 
         return 0;
     }
