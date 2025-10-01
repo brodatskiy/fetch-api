@@ -5,7 +5,7 @@ namespace App\Console\Commands\ApiService;
 use App\Models\ApiService;
 use Illuminate\Console\Command;
 
-class AddApiServiceEndpointsList extends Command
+class ApiServiceEndpointsList extends Command
 {
 
     /**
