@@ -17,7 +17,6 @@ class CreateApiServicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('host');
-            $table->json('supported_token_types');
             $table->timestamps();
             $table->softDeletes();
         });
