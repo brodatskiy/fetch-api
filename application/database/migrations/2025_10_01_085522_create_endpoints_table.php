@@ -22,7 +22,7 @@ class CreateEndpointsTable extends Migration
             $table->foreignIdFor(ApiService::class)->index()
                 ->constrained()
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();;;
+                ->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
