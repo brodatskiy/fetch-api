@@ -13,7 +13,7 @@ class ApiServiceEndpointsList extends Command
      *
      * @var string
      */
-    protected $signature = 'api-service:list';
+    protected $signature = 'api-service:endpoints {apiServiceId?}';
     /**
      * The console command description.
      *
@@ -38,17 +38,28 @@ class ApiServiceEndpointsList extends Command
      */
     public function handle(): int
     {
-        $apiServices = ApiService::all(['id', 'name', 'endpoints', 'supported_token_types']);
-        if ($apiServices->isNotEmpty()) {
-            $this->info("Доступные сервисы:");
+        $apiServiceId = $this->argument('apiServiceId');
+
+        if (!$apiServiceId) {
+            $apiServices = ApiService::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $apiServiceName = $this->choice('Выберете сервис', $apiServices);
+            $apiServiceId = array_search($apiServiceName, $apiServices);
+        }
+
+        $apiService = ApiService::find($apiServiceId);
+
+        $endpoints = $apiService->endpoints()->get();
+
+        if ($endpoints->isNotEmpty()) {
+            $this->info("Доступные точки входа:");
             $this->table(
-                ['ID', 'Название', 'endpoints', 'supported_token_types'],
-                $apiServices->map(function ($service) {
+                ['ID', 'Название', 'URN', 'Связанная модель'],
+                $endpoints->map(function ($endpoint) {
                     return [
-                        'id' => $service->id,
-                        'name' => $service->name,
-                        'endpoints' => $service->endpoints ? implode(', ', $service->endpoints) : 'нет',
-                        'supported_token_types' => $service->supported_token_types ? implode(', ', $service->supported_token_types) : 'нет',
+                        'id' => $endpoint->id,
+                        'name' => $endpoint->name,
+                        'urn' => $endpoint->urn,
+                        'model' => $endpoint->model->fullclass(),
                     ];
                 })->toArray()
             );
