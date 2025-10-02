@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static create(array $array)
+ */
 class Endpoint extends Model
 {
     use SoftDeletes;
@@ -15,6 +18,10 @@ class Endpoint extends Model
         'urn',
         'model',
         'api_service_id',
+    ];
+
+    protected $casts = [
+        'model' => \App\Enum\Model::class,
     ];
 
     public function apiService(): BelongsTo
