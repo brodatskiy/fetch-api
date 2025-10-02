@@ -59,7 +59,7 @@ class CreateApiService extends Command
 
         $apiService->tokenTypes()->attach($token_types_ids);
 
-        $this->info("Api сервис " . $this->argument('name') . " создан");
+        $this->info("Api сервис " . $name . " создан");
 
         return 0;
     }
