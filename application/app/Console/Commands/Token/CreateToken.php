@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands\Token;
 
+use App\Models\Account;
+use App\Models\ApiService;
 use App\Models\Token;
+use App\Models\TokenType;
 use Illuminate\Console\Command;
 
 class CreateToken extends Command
@@ -12,7 +15,7 @@ class CreateToken extends Command
      *
      * @var string
      */
-    protected $signature = 'token:create {token_type_id} {token_value} {account_id} {api_service_id}';
+    protected $signature = 'token:create {tokenTypeId?} {tokenValue?} {accountId?} {apiServiceId?}';
     /**
      * The console command description.
      *
@@ -37,12 +40,39 @@ class CreateToken extends Command
      */
     public function handle(): int
     {
+        $tokenTypeId = $this->argument('tokenTypeId');
+
+        if (!$tokenTypeId) {
+            $tokenTypes = TokenType::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $tokenTypeName = $this->choice('Выберете тип токена', $tokenTypes);
+            $tokenTypeId = array_search($tokenTypeName, $tokenTypes);
+        }
+
+        $tokenValue = $this->argument('tokenValue') ?? $this->ask('Значение токена');
+        $accountId = $this->argument('accountId');
+
+        if (!$accountId) {
+            $accounts = Account::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $accountName = $this->choice('Выберете аккаунт', $accounts);
+            $accountId = array_search($accountName, $accounts);
+        }
+
+        $apiServiceId = $this->argument('apiServiceId');
+
+        if (!$apiServiceId) {
+            $apiServices = ApiService::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $apiServiceName = $this->choice('Выберете сервис', $apiServices);
+            $apiServiceId = array_search($apiServiceName, $apiServices);
+        }
+
         $token = Token::create([
-            'token_type_id' => $this->argument('token_type_id'),
-            'token_value' => $this->argument('token_value'),
-            'account_id' => $this->argument('account_id'),
-            'api_service_id' => $this->argument('api_service_id'),
+            'token_type_id' => $tokenTypeId,
+            'token_value' => $tokenValue,
+            'account_id' => $accountId,
+            'api_service_id' => $apiServiceId,
         ]);
+
+        $this->info("Токен создан");
 
         return 0;
     }
