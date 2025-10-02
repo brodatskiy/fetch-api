@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Endpoint;
 
+use App\Enum\Model;
 use App\Models\ApiService;
 use App\Models\Endpoint;
 use Illuminate\Console\Command;
@@ -15,10 +16,10 @@ class AddEndpoint extends Command
      * @var string
      */
     protected $signature = 'endpoint:add 
-                            {name}
-                            {urn}
-                            {model}
-                            {api_service_id}';
+                            {name?}
+                            {urn?}
+                            {model?}
+                            {apiServiceId?}';
     /**
      * The console command description.
      *
@@ -43,13 +44,26 @@ class AddEndpoint extends Command
      */
     public function handle(): int
     {
-        $apiService = ApiService::find($this->argument('id'));
+        $name = $this->argument('name') ?? $this->ask('Имя "endpoint"');
+        $urn = $this->argument('urn') ?? $this->ask('urn');
+        $model = $this->argument('model') ?? $this->choice('Выберете тип токена', Model::values());
+        $apiServiceId = $this->argument('apiServiceId');
+
+        if (!$apiServiceId) {
+            $apiServices = ApiService::all(['name', "id"])->pluck('name', 'id')->toArray();
+            $apiServiceName = $this->choice('Выберете сервис', $apiServices);
+            $apiServiceId = array_search($apiServiceName, $apiServices);
+        }
+
+        $apiService = ApiService::find($apiServiceId);
 
         $apiService->endpoints()->create([
-            'name' => $this->argument('name'),
-            'urn' => $this->argument('urn'),
-            'model' => $this->argument('model'),
+            'name' => $name,
+            'urn' => $urn,
+            'model' => $model,
         ]);
+
+        $this->info("Endpoint " . $name . " создан");
 
         return 0;
     }
