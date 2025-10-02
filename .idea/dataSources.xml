@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:mariadb://31.31.198.78:3306/u1009472_export</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="wb-api@localhost" uuid="8245af3f-b68f-4552-b1bc-aed2fd2691ef">
+    <data-source source="LOCAL" name="fetch-api@localhost" uuid="8245af3f-b68f-4552-b1bc-aed2fd2691ef">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3308/wb-api</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3308/fetch-api</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
