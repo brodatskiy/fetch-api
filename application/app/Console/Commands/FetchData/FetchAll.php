@@ -11,7 +11,7 @@ class FetchAll extends Command
      *
      * @var string
      */
-    protected $signature = 'fetch:all {account_id}';
+    protected $signature = 'fetch:all {account_id} {apiService} {dateFrom?} {dateTo?}';
 
     /**
      * The console command description.
@@ -37,19 +37,17 @@ class FetchAll extends Command
      */
     public function handle(): int
     {
+        $arguments = [
+            'accountId' => $this->argument('account_id'),
+            'apiService' => $this->argument('apiService'),
+            'dateFrom' => $this->argument('dateFrom'),
+            'dateTo' => $this->argument('dateTo'),
+        ];
 
-        $this->call('fetch:incomes', [
-            'account_id' => $this->argument('account_id'),
-        ]);
-        $this->call('fetch:orders', [
-            'account_id' => $this->argument('account_id'),
-        ]);
-        $this->call('fetch:sales', [
-            'account_id' => $this->argument('account_id'),
-        ]);
-        $this->call('fetch:stocks', [
-            'account_id' => $this->argument('account_id'),
-        ]);
+        $this->call('fetch:incomes', $arguments);
+        $this->call('fetch:orders', $arguments);
+        $this->call('fetch:sales', $arguments);
+        $this->call('fetch:stocks', $arguments);
 
         return 0;
     }
