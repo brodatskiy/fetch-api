@@ -14,6 +14,8 @@ class Token extends Model
 {
     use SoftDeletes;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'token_type_id',
         'value',
