@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands\FetchData;
 
+use App\Models\Account;
+use App\Models\ApiService;
 use App\Models\Sale;
 use App\Services\FetchService;
+use App\Services\FetchServiceFactory;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
@@ -15,7 +18,7 @@ class FetchSales extends Command
      *
      * @var string
      */
-    protected $signature = 'fetch:sales {account_id} {dateFrom?} {dateTo?}';
+    protected $signature = 'fetch:sales {accountId} {apiService} {dateFrom?} {dateTo?}';
 
     /**
      * The console command description.
@@ -43,11 +46,17 @@ class FetchSales extends Command
      */
     public function handle(FetchService $fetchService): int
     {
-
         $dateFrom = $this->argument('dateFrom') ? $this->argument('dateFrom') : '1970-01-01';
         $dateTo = $this->argument('dateTo') ? $this->argument('dateTo') : Carbon::today()->format('Y-m-d');
+        $account = Account::find($this->argument('accountId'));
+        $apiService = ApiService::find($this->argument('apiService'));
+        $endpoint = $apiService->getEndpointByName('Sales');
 
-        $fetchService->fetch(Sale::class, '/api/sales', $dateFrom, $dateTo);
+        $fetchService = FetchServiceFactory::make($account, $apiService);
+
+        $fetchService->fetch($endpoint, $dateFrom, $dateTo);
+
+        $this->info("Загрузка продаж окончена");
 
         return 0;
     }
