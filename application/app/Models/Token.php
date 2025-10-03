@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static create(array $array)
+ * @property string $value
  */
 class Token extends Model
 {
@@ -17,7 +16,7 @@ class Token extends Model
 
     protected $fillable = [
         'token_type_id',
-        'token_value',
+        'value',
         'account_id',
         'api_service_id',
     ];
@@ -32,8 +31,13 @@ class Token extends Model
         return $this->belongsTo(Account::class);
     }
 
-    public function tokeType(): BelongsTo
+    public function tokenType(): BelongsTo
     {
         return $this->belongsTo(TokenType::class);
+    }
+
+    public function getTokenTypeName(): ?string
+    {
+        return $this->tokenType()->first()->name ?? null;
     }
 }
