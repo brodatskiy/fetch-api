@@ -12,18 +12,22 @@ class SaveData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $model;
     private array $data;
+    private int $accountId;
+    private string $modelName;
+
 
     /**
      * Create a new job instance.
      *
-     * @param string $model
+     * @param int $accountId
+     * @param string $modelName
      * @param array $data
      */
-    public function __construct(string $model, array $data)
+    public function __construct(int $accountId, string $modelName, array $data)
     {
-        $this->model = $model;
+        $this->accountId = $accountId;
+        $this->modelName = $modelName;
         $this->data = $data['data'];
     }
 
@@ -34,10 +38,18 @@ class SaveData implements ShouldQueue
      */
     public function handle(): void
     {
-        $model = app($this->model);
+        $model = app($this->modelName);
 
         foreach ($this->data as $item) {
-            $model::updateOrInsert($item, $item);
+            $item['account_id'] = $this->accountId;
+
+            $existing = $model::where($item)->first();
+
+            if ($existing) {
+                $existing->update($item);
+            } else {
+                $model::create($item);
+            }
         }
     }
 }
