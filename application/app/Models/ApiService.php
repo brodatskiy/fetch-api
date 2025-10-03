@@ -35,6 +35,11 @@ class ApiService extends Model
         return $this->hasMany(Endpoint::class);
     }
 
+    public function getEndpointByName(string $endpointName): ?Endpoint
+    {
+        return $this->endpoints()->where('name', $endpointName)->first();
+    }
+
     public function tokenTypes(): BelongsToMany
     {
         return $this->belongsToMany(TokenType::class);
