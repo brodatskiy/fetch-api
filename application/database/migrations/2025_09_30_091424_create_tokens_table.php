@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\TokenTypes;
 use App\Models\Account;
 use App\Models\ApiService;
 use App\Models\TokenType;
