@@ -67,7 +67,7 @@ class CreateToken extends Command
 
         $token = Token::create([
             'token_type_id' => $tokenTypeId,
-            'token_value' => $tokenValue,
+            'value' => $tokenValue,
             'account_id' => $accountId,
             'api_service_id' => $apiServiceId,
         ]);
