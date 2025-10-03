@@ -23,7 +23,7 @@ class CreateTokensTable extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();;
-            $table->string('token_value');
+            $table->string('value');
             $table->foreignIdFor(Account::class)->index()
                 ->constrained()
                 ->cascadeOnUpdate()
@@ -33,7 +33,7 @@ class CreateTokensTable extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();;
 
-            $table->unique(['api_service_id', 'token_type_id']);
+            $table->unique(['api_service_id', 'token_type_id', 'account_id']);
             $table->timestamps();
             $table->softDeletes();
         });
