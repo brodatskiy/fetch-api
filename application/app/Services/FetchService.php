@@ -4,9 +4,10 @@ namespace App\Services;
 
 
 use App\Jobs\SaveData;
-use GuzzleHttp\Client;
+use App\Models\Account;
+use App\Models\ApiService;
+use App\Models\Endpoint;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class FetchService
@@ -14,33 +15,23 @@ class FetchService
     private int $page = 1;
     const LIMIT = 500;
     private int $backoffDelay = 60;
-    private Client $client;
+    private ApiClient $client;
+    private Account $account;
 
-    public function __construct()
+    public function __construct(Account $account, ApiService $apiService)
     {
-        $this->client = new Client([
-            'base_uri' => Config::get('services.fetch_api.host'),
-            'timeout' => Config::get('services.fetch_api.timeout', 2.0),
-        ]);
+        $this->account = $account;
+        $this->client = ApiClientFactory::make($account, $apiService);
     }
 
-    public function fetch(string $modelName, string $uri, string $dateFrom, string $dateTo): void
+    public function fetch(Endpoint $endpoint, string $dateFrom, string $dateTo): void
     {
         do {
             $response = null;
             try {
-                $response = $this->client->request('GET', $uri, [
-                    'query' => [
-                        'dateFrom' => $dateFrom,
-                        'dateTo' => $dateTo,
-                        'key' => Config::get('services.fetch_api.key'),
-                        'page' => $this->page,
-                        'limit' => self::LIMIT,
-                    ],
-                ]);
-
+                $response = $this->client->makeRequestWithAuth($endpoint, $dateFrom, $dateTo, $this->page, self::LIMIT);
             } catch (GuzzleException $e) {
-                $this->logRequest($modelName, $uri, $dateFrom, $dateTo, $e);
+                $this->logRequest($endpoint, $dateFrom, $dateTo, $e);
                 break;
             }
 
@@ -54,19 +45,19 @@ class FetchService
                 continue;
             }
 
-            SaveData::dispatch($modelName, $data);
+            SaveData::dispatch($this->account->id, $endpoint->model->fullClass(), $data);
             $this->page++;
         } while ($hasMorePages);
     }
 
-    protected function logRequest(string $modelName, string $uri, string $dateFrom, string $dateTo, GuzzleException $e): void
+    protected function logRequest(Endpoint $endpoint, string $dateFrom, string $dateTo, GuzzleException $e): void
     {
         $statusCode = $e->getCode();
         $statusMessage = $e->getMessage();
         $message = sprintf(
-            "\nModel name: %s, \nURI: %s, \nDateFrom: %s, \nDateTo: %s, \nPage: %d, \nStatus code: %d, \nStatus message: \n%s",
-            $modelName,
-            $uri,
+            " \nDateFrom: %s, \nDateTo: %s, \nPage: %d, \nStatus code: %d, \nStatus message: \n%s",
+//            $modelName,
+//            $uri,
             $dateFrom,
             $dateTo,
             $this->page,
