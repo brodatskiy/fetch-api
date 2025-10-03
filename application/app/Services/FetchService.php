@@ -55,9 +55,9 @@ class FetchService
         $statusCode = $e->getCode();
         $statusMessage = $e->getMessage();
         $message = sprintf(
-            " \nDateFrom: %s, \nDateTo: %s, \nPage: %d, \nStatus code: %d, \nStatus message: \n%s",
-//            $modelName,
-//            $uri,
+            "\nModel name: %s, \nURI: %s, \nDateFrom: %s, \nDateTo: %s, \nPage: %d, \nStatus code: %d, \nStatus message: \n%s",
+            $endpoint->model->fullClass(),
+            $endpoint->model->uri,
             $dateFrom,
             $dateTo,
             $this->page,
