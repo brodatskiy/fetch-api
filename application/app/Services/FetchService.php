@@ -17,11 +17,19 @@ class FetchService
     private int $backoffDelay = 60;
     private ApiClient $client;
     private Account $account;
+    private array $context;
 
     public function __construct(Account $account, ApiService $apiService)
     {
         $this->account = $account;
         $this->client = ApiClientFactory::make($account, $apiService);
+        $this->context = [
+            'account' => $this->account->name,
+            'pagination' => [
+                'page' => $this->page,
+                'limit' => self::LIMIT,
+            ],
+        ];
     }
 
     public function fetch(Endpoint $endpoint, string $dateFrom, string $dateTo): void
@@ -45,28 +53,38 @@ class FetchService
                 continue;
             }
 
-            SaveData::dispatch($this->account->id, $endpoint->model->fullClass(), $data);
+            SaveData::dispatchSync($this->account->id, $endpoint->model, $data['data']);
             $this->page++;
         } while ($hasMorePages);
+        $this->context['endpoint'] = $endpoint;
+        Log::info('Fetch process completed', $this->context);
     }
 
     protected function logRequest(Endpoint $endpoint, string $dateFrom, string $dateTo, GuzzleException $e): void
     {
-        $statusCode = $e->getCode();
-        $statusMessage = $e->getMessage();
-        $message = sprintf(
-            "\nModel name: %s, \nURI: %s, \nDateFrom: %s, \nDateTo: %s, \nPage: %d, \nStatus code: %d, \nStatus message: \n%s",
-            $endpoint->model->fullClass(),
-            $endpoint->model->uri,
-            $dateFrom,
-            $dateTo,
-            $this->page,
-            $statusCode,
-            $statusMessage
-        );
+        $this->context[] = [
+            'pagination' => [
+                'page' => $this->page,
+                'limit' => self::LIMIT,
+            ],
+            'api_service' => $endpoint->apiService->name,
+            'model' => $endpoint->model->fullClass(),
+            'endpoint' => $endpoint->urn,
+            'error' => $e->getMessage(),
+            'date_range' => [
+                'from' => $dateFrom,
+                'to' => $dateTo,
+            ],
+        ];
 
-        if ($statusCode >= 400) {
-            Log::error($message);
+        $statusCode = $e->getCode();
+
+        if ($statusCode >= 500) {
+            Log::error("API Error {$statusCode}", $this->context);
+        } elseif ($statusCode === 429) {
+            Log::warning('Rate limit hit', $this->context);
+        } elseif ($statusCode >= 400) {
+            Log::warning("Client Error {$statusCode}", $this->context);
         }
     }
 }
