@@ -1,12 +1,33 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Fetch-API
 
+Laravel приложение для импорта/синхронизации данных из стороннего API.
 
-### Тестовое API на фреймворке Laravel
+## Полная настройка
 
-#### Доступы
-ссылка на бд
-https://fvh2.spaceweb.ru/phpMyAdmin/index.php?route=/
+### Запуск
 
-логин: nikolaybr3
+```bash
+composer run-script setup-environment # создает .env из .env.example
+docker compose --env-file application/.env up
+```
 
-пароль: qU6SK8%RxR5VJoJr
+### Консольные команды для работы с базовыми сущностями
+```bash
+docker exec app php artisan company:create {name}
+docker exec app php artisan account:create {name} {companyId}
+docker exec app php artisan api-service:create {name} {host} {--T|tokenTypeIds=*}
+docker exec app php artisan api-service:endpoints {apiServiceId}
+docker exec app php artisan token-type:create {name}
+docker exec app php artisan token:create {tokenTypeId} {tokenValue} {accountId} {apiServiceId}
+```
+
+### Получение и обработка данных
+
+#### Получение данных из API
+```bash
+# Получение определенных данных
+docker exec app php artisan fetch:[incomes|sales|stocks|orders] {accountId} {apiService} {dateFrom} {dateTo}
+
+# Получение всех данных
+docker exec app php artisan fetch:all {accountId} {apiService} {dateFrom} {dateTo}
+```
