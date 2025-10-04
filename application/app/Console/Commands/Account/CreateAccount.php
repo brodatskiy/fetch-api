@@ -12,7 +12,7 @@ class CreateAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'account:create {name?} {company_id?}';
+    protected $signature = 'account:create {name?} {companyId?}';
     /**
      * The console command description.
      *
@@ -38,11 +38,11 @@ class CreateAccount extends Command
     public function handle(): int
     {
         $name = $this->argument('name') ?? $this->ask('Имя');
-        $company_id = $this->argument('company_id');
+        $company_id = $this->argument('companyId');
 
         if (!$company_id) {
             $companies = Company::all(['name', "id"])->pluck('name', 'id')->toArray();
-            $company_name = $this->argument('company_id') ?? $this->choice('Выберете компанию', $companies);
+            $company_name = $this->argument('companyId') ?? $this->choice('Выберете компанию', $companies);
             $company_id = array_search($company_name, $companies);
         }
 
