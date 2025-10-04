@@ -40,11 +40,9 @@ class FetchStocks extends Command
     /**
      * Execute the console command.
      *
-     * @param FetchService $fetchService
      * @return int
-     * @throws GuzzleException
      */
-    public function handle(FetchService $fetchService): int
+    public function handle(): int
     {
         $dateFrom = $this->argument('dateFrom') ? $this->argument('dateFrom') : Carbon::today()->format('Y-m-d');
         $dateTo = $this->argument('dateTo') ? $this->argument('dateTo') : Carbon::today()->format('Y-m-d');

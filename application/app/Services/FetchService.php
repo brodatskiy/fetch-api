@@ -53,7 +53,7 @@ class FetchService
                 continue;
             }
 
-            SaveData::dispatchSync($this->account->id, $endpoint->model, $data['data']);
+            SaveData::dispatch($this->account->id, $endpoint->model, $data['data']);
             $this->page++;
         } while ($hasMorePages);
         $this->context['endpoint'] = $endpoint;
