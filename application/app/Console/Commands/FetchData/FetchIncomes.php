@@ -23,7 +23,6 @@ class FetchIncomes extends Command
      * @var string
      */
     protected $description = 'Fetch Incomes';
-    private FetchService $fetchService;
 
     /**
      * Create a new command instance.
@@ -32,14 +31,12 @@ class FetchIncomes extends Command
      */
     public function __construct()
     {
-//        $this->fetchService = new FetchService(Account::find($this->argument('accountId')), ApiService::find($this->argument('apiService')));
         parent::__construct();
     }
 
     /**
      * Execute the console command.
      *
-     * @param FetchService $fetchService
      * @return int
      */
     public function handle(): int
