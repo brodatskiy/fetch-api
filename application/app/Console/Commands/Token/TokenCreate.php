@@ -8,7 +8,7 @@ use App\Models\Token;
 use App\Models\TokenType;
 use Illuminate\Console\Command;
 
-class CreateToken extends Command
+class TokenCreate extends Command
 {
     /**
      * The name and signature of the console command.

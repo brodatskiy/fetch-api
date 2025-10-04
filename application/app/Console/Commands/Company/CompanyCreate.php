@@ -4,7 +4,7 @@ namespace App\Console\Commands\Company;
 
 use App\Models\Company;
 use Illuminate\Console\Command;
-class CreateCompany extends Command
+class CompanyCreate extends Command
 {
     /**
      * The name and signature of the console command.

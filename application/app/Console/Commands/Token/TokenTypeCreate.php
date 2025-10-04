@@ -5,7 +5,7 @@ namespace App\Console\Commands\Token;
 use App\Models\TokenType;
 use Illuminate\Console\Command;
 
-class CreateTokenType extends Command
+class TokenTypeCreate extends Command
 {
     /**
      * The name and signature of the console command.

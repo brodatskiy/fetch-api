@@ -5,7 +5,7 @@ namespace App\Console\Commands\Account;
 use App\Models\Company;
 use Illuminate\Console\Command;
 
-class CreateAccount extends Command
+class AccountCreate extends Command
 {
     /**
      * The name and signature of the console command.

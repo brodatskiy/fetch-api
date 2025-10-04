@@ -7,7 +7,7 @@ use App\Models\ApiService;
 use App\Models\Endpoint;
 use Illuminate\Console\Command;
 
-class AddEndpoint extends Command
+class EndpointAdd extends Command
 {
 
     /**

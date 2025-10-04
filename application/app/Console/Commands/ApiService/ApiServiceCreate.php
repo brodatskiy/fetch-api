@@ -6,7 +6,7 @@ use App\Models\ApiService;
 use App\Models\TokenType;
 use Illuminate\Console\Command;
 
-class CreateApiService extends Command
+class ApiServiceCreate extends Command
 {
 
     /**
