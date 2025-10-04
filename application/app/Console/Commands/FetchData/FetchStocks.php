@@ -4,11 +4,8 @@ namespace App\Console\Commands\FetchData;
 
 use App\Models\Account;
 use App\Models\ApiService;
-use App\Models\Stock;
-use App\Services\FetchService;
 use App\Services\FetchServiceFactory;
 use Carbon\Carbon;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
 class FetchStocks extends Command

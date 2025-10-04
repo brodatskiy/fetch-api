@@ -4,7 +4,6 @@ namespace App\Console\Commands\FetchData;
 
 use App\Models\Account;
 use App\Models\ApiService;
-use App\Services\FetchService;
 use App\Services\FetchServiceFactory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
