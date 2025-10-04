@@ -36,17 +36,17 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": [
+        "autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "post-update-cmd": [
+        "publish-assets": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
-        "post-root-package-install": [
+        "setup-environment": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "post-create-project-cmd": [
+        "generate-app-key": [
             "@php artisan key:generate --ansi"
         ]
     },
