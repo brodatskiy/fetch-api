@@ -20,17 +20,6 @@ class Account extends Model
         'name',
     ];
 
-    public function resolveRelation($modelName)
-    {
-        $methodName = strtolower(Str::plural($modelName));
-
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName();
-        }
-
-        return null;
-    }
-
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -41,23 +30,23 @@ class Account extends Model
         return $this->hasMany(Token::class);
     }
 
-    public function incomes(): MorphToMany
+    public function incomes(): HasMany
     {
-        return $this->morphedByMany(Income::class, 'accountable');
+        return $this->hasMany(Income::class);
     }
 
-    public function sales(): MorphToMany
+    public function sales(): HasMany
     {
-        return $this->morphedByMany(Sale::class, 'accountable');
+        return $this->hasMany(Sale::class);
     }
 
-    public function orders(): MorphToMany
+    public function orders(): HasMany
     {
-        return $this->morphedByMany(Order::class, 'accountable');
+        return $this->hasMany(Order::class);
     }
 
-    public function stocks(): MorphToMany
+    public function stocks(): HasMany
     {
-        return $this->morphedByMany(Stock::class, 'accountable');
+        return $this->hasMany(Stock::class);
     }
 }
