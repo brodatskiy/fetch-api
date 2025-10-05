@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 class FetchService
 {
     private int $page = 1;
-    private const LIMIT = 500;
+    private const LIMIT = 200;
     private const BACKOFF_DELAY = 60;
     private const MAX_RETRIES = 3;
 
@@ -43,6 +43,7 @@ class FetchService
 
             $this->processData($endpoint, $data['data']);
             $this->page++;
+            $this->retryCount = 0;
 
         } while ($hasMorePages);
 
