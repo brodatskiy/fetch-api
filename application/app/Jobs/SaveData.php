@@ -48,7 +48,7 @@ class SaveData implements ShouldQueue
 
         foreach ($this->data as $item) {
             $entity = $model::updateOrCreate($item, $item);
-            $account->resolveRelation($this->model->value)->attach($entity->id);
+            $account->resolveRelation($this->model->value)->syncWithoutDetaching([$entity->id]);
         }
     }
 
