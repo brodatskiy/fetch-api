@@ -44,11 +44,9 @@ class SaveData implements ShouldQueue
     public function handle(): void
     {
         $model = app($this->model->fullClass());
-        $account = Account::find($this->accountId);
 
         foreach ($this->data as $item) {
-            $entity = $model::updateOrCreate($item, $item);
-            $account->resolveRelation($this->model->value)->syncWithoutDetaching([$entity->id]);
+            $model::updateOrCreate([...$item, 'account_id' => $this->accountId], $item);
         }
     }
 
