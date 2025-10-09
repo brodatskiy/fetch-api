@@ -8,9 +8,13 @@ RUN #mkdir /phpIni
 COPY files/php/php.ini /usr/local/etc/php/conf.d/php.ini
 #COPY files/php/ext /phpIni
 
+# Создаем необходимые директории для OpenRC
+RUN mkdir -p /run/openrc && \
+    touch /run/openrc/softlevel
+
 # SYS: Install required packages
 RUN apk --no-cache upgrade && \
-    apk --no-cache add bash git sudo openssh libxml2-dev postgresql-dev oniguruma-dev autoconf g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
+    apk --no-cache add openrc bash git cronie supervisor sudo openssh libxml2-dev postgresql-dev oniguruma-dev autoconf g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
 
 # COMPOSER: install binary and prestissimo
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
@@ -61,6 +65,16 @@ ENV SWOOLE_WATCH $true
 ENV SWOOLE_WORKERS "auto"
 
 RUN chown -R www-data:www-data /app
+
+# Добавление кофиг файлов supervisord
+COPY supervisor/supervisord.conf  /etc/
+
+# Копирование таблиц крон
+COPY /cron/crontab.txt /etc/cron.d/crontab
+
+# Выдача прав крону
+RUN chmod 0744 /etc/cron.d/crontab; \
+    crontab /etc/cron.d/crontab
 
 #RUN chmod -R 777 storage/
 
