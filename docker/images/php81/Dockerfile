@@ -14,7 +14,7 @@ RUN mkdir -p /run/openrc && \
 
 # SYS: Install required packages
 RUN apk --no-cache upgrade && \
-    apk --no-cache add openrc bash git cronie supervisor sudo openssh libxml2-dev postgresql-dev oniguruma-dev autoconf g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
+    apk --no-cache add openrc bash git supervisor sudo openssh libxml2-dev postgresql-dev oniguruma-dev autoconf g++ make npm freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev
 
 # COMPOSER: install binary and prestissimo
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
