@@ -7,7 +7,7 @@ services:
             - "6969:8000"
         networks:
             - cluster
-        container_name: app
+        container_name: ${APP_NAME}_app
 
     db:
         image: mysql
@@ -21,7 +21,7 @@ services:
             - MYSQL_DATABASE=${DB_DATABASE}
         networks:
             - cluster
-        container_name: db
+        container_name: ${APP_NAME}_db
 
 networks:
     cluster:
