@@ -7,6 +7,7 @@ Laravel приложение для импорта/синхронизации д
 ### Запуск
 
 ```bash
+docker network create cluster
 composer run-script setup-environment # создает .env из .env.example
 docker compose --env-file application/.env up
 ```
