@@ -3,6 +3,7 @@
 namespace App\Console\Commands\FetchData;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class FetchAll extends Command
 {
@@ -48,6 +49,9 @@ class FetchAll extends Command
         $this->call('fetch:orders', $arguments);
         $this->call('fetch:sales', $arguments);
         $this->call('fetch:stocks', $arguments);
+
+        $time = now()->format('Y-m-d H:i:s');
+        Log::info("Загрузка всех данных была произведена в: {$time}");
 
         return 0;
     }
