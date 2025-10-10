@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 class FetchService
 {
     private int $page = 1;
-    private const LIMIT = 200;
+    private const LIMIT = 100;
     private const BACKOFF_DELAY = 60;
     private const MAX_RETRIES = 3;
 
